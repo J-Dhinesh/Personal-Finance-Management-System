@@ -197,7 +197,7 @@ const Transaction = () => {
                   <td>{transaction.accountNumber}</td>
                   <td>{transaction.transactionId}</td>
                   <td>{transaction.transactionType}</td>
-                  <td>{transaction.amount}</td>
+                  <td className={`${transaction.amount<0?'money-spent':'money-received'} `}>{transaction.amount}</td>
                 </tr>
               ))
             ) : (
