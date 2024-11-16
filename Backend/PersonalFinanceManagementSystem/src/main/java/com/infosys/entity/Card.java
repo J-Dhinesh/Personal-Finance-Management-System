@@ -1,5 +1,6 @@
 package com.infosys.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,7 +12,7 @@ public class Card {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String username;
-	private String cardNumber;
+	private String accountNumber;
 	private String cardHolder;
 	private String expiryDate;
 	private String cvv;
@@ -26,11 +27,11 @@ public class Card {
 	
 	// PUBLIC PARAMETERIZED CONSTRUCTOR
 	
-	public Card(int id, String username, String cardNumber, String cardHolder, String expiryDate, String cvv,int amount) {
+	public Card(int id, String username, String accountNumber, String cardHolder, String expiryDate, String cvv,int amount) {
 		super();
 		this.id = id;
 		this.username = username;
-		this.cardNumber = cardNumber;
+		this.accountNumber = accountNumber;
 		this.cardHolder = cardHolder;
 		this.expiryDate = expiryDate;
 		this.cvv = cvv;
@@ -51,11 +52,11 @@ public class Card {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getCardNumber() {
-		return cardNumber;
+	public String getAccountNumber() {
+		return accountNumber;
 	}
-	public void setCardNumber(String cardNumber) {
-		this.cardNumber = cardNumber;
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
 	}
 	public String getCardHolder() {
 		return cardHolder;
@@ -85,7 +86,7 @@ public class Card {
 	// TO STRING METHODS
 	@Override
 	public String toString() {
-		return "Card [id=" + id + ", username=" + username + ", cardNumber=" + cardNumber + ", cardHolder=" + cardHolder
+		return "Card [id=" + id + ", username=" + username + ", accountNumber=" + accountNumber + ", cardHolder=" + cardHolder
 				+ ", expiryDate=" + expiryDate + ", cvv=" + cvv + ", amount=" + amount + "]";
 	}
 

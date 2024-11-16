@@ -16,11 +16,27 @@ const Transaction = () => {
   const [isFormVisible, setFormVisible] = useState(false);
   const [transactions, setTransactions] = useState([]);
   const [successMessage,setSuccessMessage]=useState('');
+  const [accountTotals, setAccountTotals] = useState({});
   const [error,setError]=useState('');
   const {username}=useContext(UserContext);
   const toggleOverlay = () => {
     setFormVisible(!isFormVisible);
   };
+
+  const calculateTotalAmounts = (transactions) => {
+    const totals = {};
+    transactions.forEach((transaction) => {
+      const account = transaction.accountNumber;
+      const amount = parseFloat(transaction.amount);
+      if (totals[account]) {
+        totals[account] += amount;
+      } else {
+        totals[account] = amount;
+      }
+    });
+    return totals;
+  };
+
 
   const handleChange=(e) => {
     const {name,value}=e.target;
@@ -32,7 +48,9 @@ const Transaction = () => {
         try {
             const response = await axios.get(`http://localhost:9000/home/transaction?username=${username}`);
             if (response.status === 200) {
-                setTransactions(response.data);
+                setTransactions(response.data); 
+                const totals = calculateTotalAmounts(response.data);
+                setAccountTotals(totals);
             } else {
                 setError('No transaction found.');
             }
@@ -46,6 +64,16 @@ const Transaction = () => {
     }
 }, [username]);
 
+
+    const updateCardAmountsInBackend = async (totals) => {
+        const updatePromises = Object.entries(totals).map(([accountNumber, totalAmount]) =>
+          axios.put('http://localhost:9000/home/balance/update', null, {
+            params: { accountNumber, amount: totalAmount },
+          })
+        );
+        await Promise.all(updatePromises);
+      
+    };
   const handleSubmit =async(e) => {
     e.preventDefault();
     try{
@@ -65,6 +93,9 @@ const Transaction = () => {
             setFormVisible(false);
             const updatedResponse=await axios.get(`http://localhost:9000/home/transaction?username=${username}`);
             setTransactions(updatedResponse.data);
+            const totals = calculateTotalAmounts(updatedResponse.data);
+            setAccountTotals(totals);
+            updateCardAmountsInBackend(totals);
       }}
 
       catch(error){

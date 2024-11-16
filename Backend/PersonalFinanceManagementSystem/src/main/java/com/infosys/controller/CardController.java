@@ -47,15 +47,15 @@ public class CardController {
 	}
 	
 	@PutMapping("/home/balance/update")
-    public ResponseEntity<String> updateCardAmount(
-            @RequestParam String cardNumber, 
-            @RequestParam double amount) {
-        
-        try {
-            cardService.updateCardAmount(cardNumber, amount);
-            return ResponseEntity.ok("Card amount updated successfully.");
-        }catch (Exception e) {
-            return ResponseEntity.status(500).body("An unexpected error occurred: " + e.getMessage());
-        }
-    }
+	public ResponseEntity<String> updateCardAmount(@RequestParam String accountNumber, @RequestParam double amount) {
+	    try {
+	        cardService.updateCardAmount(accountNumber, amount);
+	        return ResponseEntity.ok("Card amount updated successfully.");
+	    } catch (RuntimeException e) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Card not found.");
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
+	    }
+	}
+
 }

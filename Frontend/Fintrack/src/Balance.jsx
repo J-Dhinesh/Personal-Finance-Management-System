@@ -8,7 +8,7 @@ const Balance = () => {
     const { username } = useContext(UserContext); 
     const [accounts, setAccounts] = useState([]);
     const [cardDetails, setCardDetails] = useState({
-        cardNumber: '',
+        accountNumber: '',
         cardHolder: '',
         expiryDate: '',
         cvv: '',
@@ -53,7 +53,7 @@ const Balance = () => {
             if (response.status === 200) {
                 setSuccessMessage('Card added successfully!');
                 setError('');
-                setCardDetails({ cardNumber: '', cardHolder: '', expiryDate: '', cvv: '', amount: '' });
+                setCardDetails({ accountNumber: '', cardHolder: '', expiryDate: '', cvv: '', amount: '' });
                 setFormVisible(false); 
                 const updatedResponse = await axios.get(`http://localhost:9000/home/balance?username=${username}`);
                 setAccounts(updatedResponse.data);
@@ -89,8 +89,8 @@ const Balance = () => {
                         <form onSubmit={handleSubmit}>
                             <input
                                 type="text"
-                                name="cardNumber"
-                                value={cardDetails.cardNumber}
+                                name="accountNumber"
+                                value={cardDetails.accountNumber}
                                 onChange={handleInputChange}
                                 placeholder="Card Number"
                                 required
@@ -142,7 +142,7 @@ const Balance = () => {
                 {accounts.length > 0 ? (
                     accounts.map((account, index) => (
                         <div key={index} className="account-card">
-                            <p className="card-number">**** **** **** {account.cardNumber.slice(-4)}</p>
+                            <p className="card-number">**** **** **** {account.accountNumber.slice(-4)}</p>
                             <p className="card-holder">Card Holder: {account.cardHolder}</p>
                             <p className="card-expiry">Expiry: {account.expiryDate}</p>
                             <p className="card-cvv">CVV: {account.cvv}</p>
