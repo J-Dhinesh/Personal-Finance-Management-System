@@ -4,7 +4,7 @@ import axios from 'axios';
 import { UserContext } from './UserContext';
 import './Balance.css'
 
-const BalanceAndAddAccount = () => {
+const Balance = () => {
     const { username } = useContext(UserContext); 
     const [accounts, setAccounts] = useState([]);
     const [cardDetails, setCardDetails] = useState({
@@ -161,4 +161,4 @@ const BalanceAndAddAccount = () => {
     );
 };
 
-export default BalanceAndAddAccount;
+export default Balance;

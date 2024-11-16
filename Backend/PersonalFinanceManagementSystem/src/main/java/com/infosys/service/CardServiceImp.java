@@ -19,4 +19,21 @@ public class CardServiceImp implements CardService {
 	public List<Card> getCardsByUsername(String username){
 		return cardRepo.findByUsername(username);
 	}
+	
+	@Override
+	public void updateCardAmount(String cardNumber, double newTotalAmount) {
+	    System.out.println("Finding card with number: " + cardNumber);
+	    Card existingCard = cardRepo.findByCardNumber(cardNumber);
+
+	    if (existingCard != null) {
+	        System.out.println("Card found: " + existingCard);
+	        System.out.println("Updating amount from " + existingCard.getAmount() + " to " + (int) newTotalAmount);
+	        existingCard.setAmount((int) newTotalAmount);
+	        cardRepo.save(existingCard);
+	        System.out.println("Card updated successfully.");
+	    } else {
+	        throw new RuntimeException("Card with number " + cardNumber + " not found.");
+	    }
+	}
+
 }

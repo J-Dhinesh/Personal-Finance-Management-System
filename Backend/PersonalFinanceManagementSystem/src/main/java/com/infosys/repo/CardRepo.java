@@ -8,4 +8,5 @@ import com.infosys.entity.Card;
 @Repository
 public interface CardRepo extends JpaRepository<Card, Integer> {
 	List<Card> findByUsername(String username);
+	Card findByCardNumber(String cardNumber);
 }
