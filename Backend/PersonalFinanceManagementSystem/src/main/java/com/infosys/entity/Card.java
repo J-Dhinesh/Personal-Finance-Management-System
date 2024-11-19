@@ -12,6 +12,7 @@ public class Card {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String username;
+	@Column(unique=true)
 	private String accountNumber;
 	private String cardHolder;
 	private String expiryDate;

@@ -81,6 +81,8 @@ const Transaction = () => {
           });
           if(response.status==200){
             setSuccessMessage('Transaction added successfully!');
+            const newlyAdded={[transactionDetails.accountNumber]:parseFloat(transactionDetails.amount)};
+            updateCardAmountsInBackend(newlyAdded);
             setError('');
             setTransactionDetails({
               date: '',
@@ -93,9 +95,6 @@ const Transaction = () => {
             setFormVisible(false);
             const updatedResponse=await axios.get(`http://localhost:9000/home/transaction?username=${username}`);
             setTransactions(updatedResponse.data);
-            const totals = calculateTotalAmounts(updatedResponse.data);
-            setAccountTotals(totals);
-            updateCardAmountsInBackend(totals);
       }}
 
       catch(error){

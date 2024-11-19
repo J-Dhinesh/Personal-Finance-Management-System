@@ -26,7 +26,7 @@ public class CardServiceImp implements CardService {
 	    Card existingCard = cardRepo.findByAccountNumber(accountNumber);
 
 	    if (existingCard != null) {
-	        existingCard.setAmount(existingCard.getAmount()-(int) newTotalAmount);
+	        existingCard.setAmount(existingCard.getAmount()+(int) newTotalAmount);
 	        cardRepo.save(existingCard);
 	        System.out.println("Card updated successfully.");
 	    } else {

@@ -21,7 +21,7 @@ public class RegisterController {
 	public ResponseEntity<String> addNewUser(@RequestBody Register register) {
 		Register addUser=service.addNewUser(register);
 		if(addUser!=null)
-			return new ResponseEntity<>("New User has been successfully registered.",HttpStatus.CREATED);
+			return new ResponseEntity<>("New User has been successfully registered.",HttpStatus.OK);
 		else
 			return new ResponseEntity<>("User Registration Failed",HttpStatus.BAD_REQUEST);
 	}

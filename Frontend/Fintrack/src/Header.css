@@ -50,6 +50,11 @@
     display: flex;
     justify-content: space-evenly;
 }
+.inside-container .tools button{
+    margin:7% 0;
+    width:fit-content;
+    height: fit-content;
+}
 .inside-container .tools img{
     width:30px;
     height:30px;
@@ -61,3 +66,20 @@
     padding-left:10px;
 
 }
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .has-notification {
+    background-color: red;
+    border-radius: 50%;
+  }

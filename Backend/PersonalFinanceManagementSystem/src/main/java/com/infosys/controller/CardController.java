@@ -51,9 +51,7 @@ public class CardController {
 	    try {
 	        cardService.updateCardAmount(accountNumber, amount);
 	        return ResponseEntity.ok("Card amount updated successfully.");
-	    } catch (RuntimeException e) {
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Card not found.");
-	    } catch (Exception e) {
+	    }catch (Exception e) {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
 	    }
 	}

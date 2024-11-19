@@ -10,7 +10,6 @@ const Signup=()=>{
         postEx();
     }
     const postEx = async () => {
-        try {
             const response = await axios.post("http://localhost:9000/signup", {
                 "username": username.current.value,
                 "password": password.current.value
@@ -20,11 +19,7 @@ const Signup=()=>{
                 setRes("New User has been added Successfully!");
             } else {
                 setRes("User Registration failed");
-            }
-        } catch (error) {
-            console.error("Error during registration:", error);
-            setRes("Registration failed");
-        }
+            } 
     };
     return(<React.Fragment>
         <div className="signup-container">
