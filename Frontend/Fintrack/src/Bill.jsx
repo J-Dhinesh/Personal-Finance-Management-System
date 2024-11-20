@@ -53,7 +53,7 @@ const Bill = () => {
 
       if (timeDifference > 0) {
         setTimeout(() => {
-          setNotification(`Bill: ${billDetails.billName} is due!`);
+          setNotification(`Bill: {billDetails.billName} is due!`);
         }, timeDifference);
       } else {
         setNotification('Notification time is in the past. Cannot set notification.');

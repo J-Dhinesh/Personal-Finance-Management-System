@@ -7,6 +7,7 @@ import { UserContext } from "./UserContext";
 import { NotificationContext } from "./NotificationContext";
 
 const Header = () => {
+  const date=new Date();
   const { notification } = useContext(NotificationContext);
   const { username } = useContext(UserContext);
   const [isOverlayVisible, setOverlayVisible] = useState(false);
@@ -26,7 +27,7 @@ const Header = () => {
           <div className="inside-container">
             <div className="text">
               <h2>Hi, {username}</h2>
-              <h4>September 16, 2024</h4>
+              <h4>{date.toUTCString()}</h4>
             </div>
             <div className="tools">
               <button onClick={toggleOverlay}>
