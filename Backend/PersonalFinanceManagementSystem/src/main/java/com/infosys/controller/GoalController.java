@@ -12,32 +12,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.infosys.entity.Bill;
-import com.infosys.service.BillService;
-
+import com.infosys.entity.Goal;
+import com.infosys.service.GoalService;
 @Controller
 @CrossOrigin(origins= {"*"})
-public class BillController {
-
-	@Autowired BillService billService;
-	@PostMapping("/home/bill/add")
-	public ResponseEntity<String> addBill(@RequestBody Bill bill)
-	{
-		Bill response=billService.addBill(bill);
-		if(response!=null)
-			return new ResponseEntity<>("Bill added Successfully",HttpStatus.OK);
-		else
-			return new ResponseEntity<>("Failed to add Bill",HttpStatus.NOT_FOUND);
-	}
+public class GoalController {
 	
-	@GetMapping("/home/bill")
-	public ResponseEntity<List<Bill>> retrieveBills(@RequestParam String username)
+	@Autowired GoalService goalService;
+	@PostMapping("home/goals/add")
+	public ResponseEntity<String> addGoal(@RequestBody Goal goal)
 	{
-		List<Bill> response=billService.retrieveBills(username);
+		Goal response=goalService.addGoal(goal);
+		if(response!=null)
+			return new ResponseEntity<>("Goal added Successfully",HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	@GetMapping("home/goals")
+	public ResponseEntity<List<Goal>> getGoalByUsername(@RequestParam String username)
+	{
+		List<Goal> response=goalService.getGoalByUsername(username);
 		if(!response.isEmpty())
 			return new ResponseEntity<>(response,HttpStatus.OK);
-		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
 }

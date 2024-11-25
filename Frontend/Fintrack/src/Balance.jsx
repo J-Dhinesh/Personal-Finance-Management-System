@@ -3,9 +3,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from './UserContext';
 import './Balance.css'
-
 const Balance = () => {
-    const { username } = useContext(UserContext); 
+    const { username } = useContext(UserContext);
     const [accounts, setAccounts] = useState([]);
     const [cardDetails, setCardDetails] = useState({
         accountNumber: '',
@@ -17,13 +16,19 @@ const Balance = () => {
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [isFormVisible, setFormVisible] = useState(false); 
-
+    let totalAmount = 0;
+    accounts.forEach(account => {
+        totalAmount += parseFloat(account.amount);
+    });
+    totalAmount = totalAmount.toFixed(2);
     useEffect(() => {
         const fetchAccounts = async () => {
             try {
                 const response = await axios.get(`http://localhost:9000/home/balance?username=${username}`);
                 if (response.status === 200) {
                     setAccounts(response.data); 
+                    const totalAmount = response.data.reduce((acc, account) => acc + parseFloat(account.amount), 0).toFixed(2);
+            
                 } else {
                     setError('No accounts found.');
                 }
@@ -31,7 +36,6 @@ const Balance = () => {
                 setError('Failed to fetch accounts. Please try again later.');
             }
         };
-
         if (username) {
             fetchAccounts(); 
         }
@@ -44,23 +48,18 @@ const Balance = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const response = await axios.post('http://localhost:9000/home/add-account', {
-                ...cardDetails,
-                username: username 
-            });
+        const response = await axios.post('http://localhost:9000/home/add-account', {
+            ...cardDetails,
+            username: username 
+        });
 
-            if (response.status === 200) {
-                setSuccessMessage('Card added successfully!');
-                setError('');
-                setCardDetails({ accountNumber: '', cardHolder: '', expiryDate: '', cvv: '', amount: '' });
-                setFormVisible(false); 
-                const updatedResponse = await axios.get(`http://localhost:9000/home/balance?username=${username}`);
-                setAccounts(updatedResponse.data);
-            }
-        } catch (error) {
-            setError('Failed to add card. Please try again.');
-            setSuccessMessage('');
+        if (response.status === 200) {
+            setSuccessMessage('Card added successfully!');
+            setError('');
+            setCardDetails({ accountNumber: '', cardHolder: '', expiryDate: '', cvv: '', amount: '' });
+            setFormVisible(false); 
+            const updatedResponse = await axios.get(`http://localhost:9000/home/balance?username=${username}`);
+            setAccounts(updatedResponse.data);
         }
     };
 
@@ -68,11 +67,7 @@ const Balance = () => {
         setFormVisible(!isFormVisible);
     };
     
-    let totalAmount = 0;
-    accounts.forEach(account => {
-        totalAmount += parseFloat(account.amount);
-    });
-    totalAmount = totalAmount.toFixed(2);
+    
 
     return (
         <div className="balance-container">
@@ -137,7 +132,7 @@ const Balance = () => {
 
             <div className="account-list">
                 <h2>Your Accounts</h2>
-                {error && <p className="error">{error}</p>}
+                
                 <div className="account-items">
                 {accounts.length > 0 ? (
                     accounts.map((account, index) => (

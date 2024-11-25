@@ -16,6 +16,7 @@ public class Transaction {
 	public String accountNumber;
 	public String username;
 	public String transactionType;
+	public String creditOrDebit;
 	public String date;
 	public int amount;
 	
@@ -29,7 +30,7 @@ public class Transaction {
 	// Public Parameterized Constructor
 	
 	public Transaction(int id, String goal, String transactionId, String accountNumber, String username,
-			String transactionType, String date, int amount) {
+			String transactionType,String creditOrDebit, String date, int amount) {
 		super();
 		this.id = id;
 		this.goal = goal;
@@ -37,6 +38,7 @@ public class Transaction {
 		this.accountNumber = accountNumber;
 		this.username = username;
 		this.transactionType = transactionType;
+		this.creditOrDebit=creditOrDebit;
 		this.date = date;
 		this.amount = amount;
 	}
@@ -91,6 +93,12 @@ public class Transaction {
 	public void setTransactionType(String transactionType) {
 		this.transactionType = transactionType;
 	}
+	public String getCreditOrDebit() {
+		return creditOrDebit;
+	}
+	public void setCreditOrDebit(String creditOrDebit) {
+		this.creditOrDebit=creditOrDebit;
+	}
 
 	public String getDate() {
 		return date;
@@ -107,15 +115,17 @@ public class Transaction {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-
 	
-	// toString Methods
+	// toString methods
+
 	@Override
 	public String toString() {
-		return "Transaction [id=" + id + ", goal=" + goal + ", transactionId=" + transactionId + ", accountName="
-				+ accountNumber + ", username=" + username + ", transactionType=" + transactionType + ", date=" + date
-				+ ", amount=" + amount + "]";
+		return "Transaction [id=" + id + ", goal=" + goal + ", transactionId=" + transactionId + ", accountNumber="
+				+ accountNumber + ", username=" + username + ", transactionType=" + transactionType + ", creditOrDebit="
+				+ creditOrDebit + ", date=" + date + ", amount=" + amount + "]";
 	}
+
+	
 	
 	
 	

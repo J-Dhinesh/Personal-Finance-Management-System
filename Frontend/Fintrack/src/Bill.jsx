@@ -1,12 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import './Bill.css';
 import { UserContext } from './UserContext';
-import { NotificationContext } from './NotificationContext';
 import axios from 'axios';
 
-const Bill = () => {
+const Bill = ({ onNotificationAdded, onClearNotifications }) => {
   const { username } = useContext(UserContext);
-  const { notification, setNotification } = useContext(NotificationContext);
   const [isFormVisible, setFormVisible] = useState(false);
   const [bills, setBills] = useState([]);
   const [successMsg, setSuccessMsg] = useState('');
@@ -19,6 +17,10 @@ const Bill = () => {
     billAmount: '',
   });
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const entriesPerPage = 10;
+
   const toggleOverlay = () => {
     setFormVisible(!isFormVisible);
   };
@@ -30,35 +32,57 @@ const Bill = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post('http://localhost:9000/home/bill/add', {
-      ...billDetails,
-      username: username,
-    });
-    if (response.status === 200) {
-      setSuccessMsg('Bill Added Successfully');
-      setFormVisible(false);
+    try {
+      const notifyDate = new Date(billDetails.billNotify);
+      const formattedNotifyTime = notifyDate.toISOString().slice(0, 19); // "yyyy-MM-dd'T'HH:mm:ss"
 
-      
-      const billResponse = await axios.get(
-        `http://localhost:9000/home/bill?username=${username}`
-      );
-      if (billResponse.status === 200) {
-        setBills(billResponse.data);
-        setError('');
-        setSuccessMsg('Bill added successfully');
-      }
-      const notifyTime = new Date(billDetails.billNotify).getTime();
-      const currentTime = new Date().getTime();
-      const timeDifference = notifyTime - currentTime;
+      const response = await axios.post('http://localhost:9000/home/bill/add', {
+        ...billDetails,
+        username: username,
+        billNotify: formattedNotifyTime,
+      });
 
-      if (timeDifference > 0) {
-        setTimeout(() => {
-          setNotification(`Bill: {billDetails.billName} is due!`);
-        }, timeDifference);
-      } else {
-        setNotification('Notification time is in the past. Cannot set notification.');
+      if (response.status === 200) {
+        setSuccessMsg('Bill Added Successfully');
+        setFormVisible(false);
+        const billResponse = await axios.get(
+          `http://localhost:9000/home/bill?username=${username}`
+        );
+        if (billResponse.status === 200) {
+          const sortedBills = billResponse.data.sort((a, b) => new Date(b.billNotify) - new Date(a.billNotify));
+          setBills(sortedBills);
+        }
+        const currentTime = new Date().toISOString().slice(0, 19);
+        const timeDifference = new Date(formattedNotifyTime) - new Date(currentTime);
+
+        if (timeDifference > 0) {
+          const notification = {
+            notifyName: `Bill: ${billDetails.billName} is due!`,
+            notifyTime: formattedNotifyTime,
+            username: username,
+          };
+
+          const notificationTimeout = setTimeout(async () => {
+            try {
+              const notificationResponse = await axios.post(
+                'http://localhost:9000/home/addNotify',
+                notification
+              );
+              if (notificationResponse.status === 200) {
+                onNotificationAdded('red');
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          }, timeDifference);
+
+          return () => clearTimeout(notificationTimeout);
+        } else {
+          setError('Notification time is in the past. Cannot set notification.');
+        }
       }
-    } else {
+    } catch (error) {
+      console.error('Error occurred while adding bill:', error);
       setError('Failed to add Bill');
     }
   };
@@ -69,24 +93,21 @@ const Bill = () => {
         `http://localhost:9000/home/bill?username=${username}`
       );
       if (response.status === 200) {
-        setBills(response.data);
+        const sortedBills = response.data.sort((a, b) => new Date(b.billNotify) - new Date(a.billNotify));
+        setBills(sortedBills);
       } else {
         setError('No Bills have been found');
       }
     };
+
     if (username) fetchBills();
   }, [username]);
 
-  
-  useEffect(() => {
-    if (notification) {
-      const timer = setTimeout(() => {
-        setNotification(""); 
-      }, 10000);
-
-      return () => clearTimeout(timer); 
-    }
-  }, [notification, setNotification]);
+  // Pagination Logic
+  const indexOfLastEntry = currentPage * entriesPerPage;
+  const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
+  const currentEntries = bills.slice(indexOfFirstEntry, indexOfLastEntry);
+  const totalPages = Math.ceil(bills.length / entriesPerPage);
 
   return (
     <React.Fragment>
@@ -163,13 +184,13 @@ const Bill = () => {
             </tr>
           </thead>
           <tbody>
-            {bills.length > 0 ? (
-              bills.map((bill, index) => (
+            {currentEntries.length > 0 ? (
+              currentEntries.map((bill, index) => (
                 <tr key={index}>
                   <td>{bill.billName}</td>
                   <td>{bill.billDescription}</td>
-                  <td>{bill.billNotify}</td>
-                  <td>{bill.billDate}</td>
+                  <td>{new Date(bill.billNotify).toLocaleString()}</td>
+                  <td>{new Date(bill.billDate).toLocaleDateString()}</td>
                   <td>{bill.billAmount}</td>
                 </tr>
               ))
@@ -180,24 +201,25 @@ const Bill = () => {
             )}
           </tbody>
         </table>
-        <button className="add-btn" onClick={toggleOverlay}>
+        <div className='bottom'>
+        <div className="pagination">
+          <button onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} disabled={currentPage === 1}>
+            Previous
+          </button>
+          <span>Page {currentPage} of {totalPages}</span>
+          <button onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages}>
+            Next
+          </button>
+        </div>
+        <button
+          onClick={toggleOverlay}
+        >
           Add Bill
         </button>
-      </div>
-
-            {notification && 
-        <div 
-          className="notification-popup" 
-          style={{
-            color: 'red',
-            fontSize: '21px',
-            fontWeight: '600',
-            paddingLeft: '100px'
-          }}
-        >
-          {notification}
         </div>
-      }
+        {error && <p className="error">{error}</p>}
+        {successMsg && <p className="success">{successMsg}</p>}
+      </div>
     </React.Fragment>
   );
 };

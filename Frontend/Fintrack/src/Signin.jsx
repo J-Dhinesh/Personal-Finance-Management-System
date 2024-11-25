@@ -6,12 +6,12 @@ import axios from 'axios';
 import "./Signin.css";
 import { UserContext } from './UserContext';
 
-const Signin = ({ setIsAuthenticated }) => {
+const Signin = () => {
     const [res, setRes] = useState();
     const username = useRef();
     const password = useRef();
     const navigate = useNavigate();
-    const {setUsername}=useContext(UserContext);
+    const {setUsername,setIsAuthenticated}=useContext(UserContext);
 
     const post_data = () => {
         PostEx();
@@ -28,7 +28,7 @@ const Signin = ({ setIsAuthenticated }) => {
         if (response.status === 200) {
             setIsAuthenticated(true);
             setUsername(usernameValue);
-            navigate("/home");
+            navigate('/home/dashboard');
         }
     } catch (error) {
             console.error('Error during sign-in:', error);

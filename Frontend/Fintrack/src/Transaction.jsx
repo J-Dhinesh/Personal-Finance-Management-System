@@ -1,9 +1,9 @@
-import React, { useContext, useState,useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import './Transaction.css';
 import { UserContext } from './UserContext';
 import axios from 'axios';
+
 const Transaction = () => {
-  
   const [transactionDetails, setTransactionDetails] = useState({
     date: '',
     goal: '',
@@ -15,100 +15,95 @@ const Transaction = () => {
 
   const [isFormVisible, setFormVisible] = useState(false);
   const [transactions, setTransactions] = useState([]);
-  const [successMessage,setSuccessMessage]=useState('');
-  const [accountTotals, setAccountTotals] = useState({});
-  const [error,setError]=useState('');
-  const {username}=useContext(UserContext);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [error, setError] = useState('');
+  const { username } = useContext(UserContext);
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const entriesPerPage = 10;
+
   const toggleOverlay = () => {
     setFormVisible(!isFormVisible);
   };
 
-  const calculateTotalAmounts = (transactions) => {
-    const totals = {};
-    transactions.forEach((transaction) => {
-      const account = transaction.accountNumber;
-      const amount = parseFloat(transaction.amount);
-      if (totals[account]) {
-        totals[account] += amount;
-      } else {
-        totals[account] = amount;
-      }
-    });
-    return totals;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setTransactionDetails({ ...transactionDetails, [name]: value });
   };
-
-
-  const handleChange=(e) => {
-    const {name,value}=e.target;
-    setTransactionDetails({...transactionDetails,[name]:value});
-  }
 
   useEffect(() => {
     const fetchTransactions = async () => {
-        try {
-            const response = await axios.get(`http://localhost:9000/home/transaction?username=${username}`);
-            if (response.status === 200) {
-                setTransactions(response.data); 
-                const totals = calculateTotalAmounts(response.data);
-                setAccountTotals(totals);
-            } else {
-                setError('No transaction found.');
-            }
-        } catch (error) {
-            setError('Failed to fetch transactions. Please try again later.');
+      try {
+        const response = await axios.get(`http://localhost:9000/home/transaction?username=${username}`);
+        if (response.status === 200) {
+          // Sort transactions by date in descending order
+          const sortedTransactions = response.data.sort((a, b) => new Date(b.date) - new Date(a.date));
+          setTransactions(sortedTransactions); 
+        } else {
+          setError('No transaction found.');
         }
+      } catch (error) {
+        setError('Failed to fetch transactions. Please try again later.');
+      }
     };
 
     if (username) {
-        fetchTransactions(); 
+      fetchTransactions();
     }
-}, [username]);
+  }, [username]);
 
+  const updateCardAmountsInBackend = async (totals) => {
+    const updatePromises = Object.entries(totals).map(([accountNumber, totalAmount]) =>
+      axios.put('http://localhost:9000/home/balance/update', null, {
+        params: { accountNumber, amount: totalAmount },
+      })
+    );
+    await Promise.all(updatePromises);
+  };
 
-    const updateCardAmountsInBackend = async (totals) => {
-        const updatePromises = Object.entries(totals).map(([accountNumber, totalAmount]) =>
-          axios.put('http://localhost:9000/home/balance/update', null, {
-            params: { accountNumber, amount: totalAmount },
-          })
-        );
-        await Promise.all(updatePromises);
-      
-    };
-  const handleSubmit =async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-          const response =await axios.post('http://localhost:9000/home/transaction/add',{...transactionDetails,username:username
-          });
-          if(response.status==200){
-            setSuccessMessage('Transaction added successfully!');
-            const newlyAdded={[transactionDetails.accountNumber]:parseFloat(transactionDetails.amount)};
-            updateCardAmountsInBackend(newlyAdded);
-            setError('');
-            setTransactionDetails({
-              date: '',
-              goal: '',
-              accountNumber: '',
-              transactionId: '',
-              transactionType: '',
-              amount: ''
-            })
-            setFormVisible(false);
-            const updatedResponse=await axios.get(`http://localhost:9000/home/transaction?username=${username}`);
-            setTransactions(updatedResponse.data);
-      }}
-
-      catch(error){
-        setError('Failed to add transaction . Please try again');
-        setSuccessMessage('');
-      
+    const adjustedAmount = transactionDetails.creditOrDebit === 'debit' ? -Math.abs(parseFloat(transactionDetails.amount)) : parseFloat(transactionDetails.amount);
+    
+    const response = await axios.post('http://localhost:9000/home/transaction/add', {
+      ...transactionDetails,
+      username: username,
+      amount: adjustedAmount
+    });
+    if (response.status === 200) {
+      setSuccessMessage('Transaction added successfully!');
+      const newlyAdded = { [transactionDetails.accountNumber]: parseFloat(adjustedAmount) };
+      updateCardAmountsInBackend(newlyAdded);
+      setError('');
+      setTransactionDetails({
+        date: '',
+        goal: '',
+        accountNumber: '',
+        transactionId: '',
+        transactionType: '',
+        creditOrDebit: '',
+        amount: ''
+      });
+      setFormVisible(false);
+      const updatedResponse = await axios.get(`http://localhost:9000/home/transaction?username=${username}`);
+      // Sort transactions by date in descending order
+      const sortedTransactions = updatedResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date));
+      setTransactions(sortedTransactions);
     }
-  }
+  };
+
+  // Pagination Logic
+  const indexOfLastEntry = currentPage * entriesPerPage;
+  const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
+  const currentEntries = transactions.slice(indexOfFirstEntry, indexOfLastEntry);
+  const totalPages = Math.ceil(transactions.length / entriesPerPage);
 
   return (
     <React.Fragment>
       <div className="transaction-container">
         <h1>Transaction Table</h1>
-        
+
         {isFormVisible && (
           <div className="overlay">
             <div className="overlay-content">
@@ -143,7 +138,7 @@ const Transaction = () => {
                   placeholder='Enter Account Number'
                   required
                 />
-                <label htmlFor="transactionId">Transaction ID</label>
+                <label htmlFor="transactionId">Transaction ID:</label>
                 <input 
                   type="text" 
                   name="transactionId" 
@@ -152,7 +147,7 @@ const Transaction = () => {
                   placeholder='Enter Transaction ID' 
                   required
                 />
-                <label htmlFor="transactionType">Transaction Type</label>
+                <label htmlFor="transactionType">Transaction Type:</label>
                 <input 
                   type="text" 
                   name="transactionType" 
@@ -161,7 +156,18 @@ const Transaction = () => {
                   placeholder='Enter Transaction Type'
                   required 
                 />
-                <label htmlFor="transactionAmount">Amount</label>
+                <label htmlFor="creditOrDebit">Credit or Debit:</label>
+                <select 
+                  name="creditOrDebit" 
+                  value={transactionDetails.creditOrDebit} 
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select</option>
+                  <option value="credit">Credit</option>
+                  <option value="debit">Debit</option>
+                </select>
+                <label htmlFor="transactionAmount">Amount:</label>
                 <input 
                   type="number" 
                   name="amount" 
@@ -188,29 +194,46 @@ const Transaction = () => {
             </tr>
           </thead>
           <tbody>
-            {transactions.length > 0 ? (
-              transactions.map((transaction, index) => (
+            {currentEntries.length > 0 ? (
+              currentEntries.map((transaction, index) => (
                 <tr key={index}>
                   <td>{transaction.date}</td>
                   <td>{transaction.goal}</td>
                   <td>{transaction.accountNumber}</td>
                   <td>{transaction.transactionId}</td>
                   <td>{transaction.transactionType}</td>
-                  <td className={`${transaction.amount<0?'money-spent':'money-received'} `}>{transaction.amount}</td>
+                  <td className={`${transaction.creditOrDebit === 'debit' ? 'money-spent' : 'money-received'}`}>
+                    {transaction.amount}
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                  <p>No transactions added</p>
+                <p>No transactions added</p>
               </tr>
             )}
           </tbody>
         </table>
+        <div className='bottom'>
+        <div className="pagination">
+          <button onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} disabled={currentPage === 1}>
+            Previous
+          </button>
+          <span>Page {currentPage} of {totalPages}</span>
+          <button onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages}>
+            Next
+          </button>
+        </div>
 
         <button onClick={toggleOverlay} className='control-btn'>
           {isFormVisible ? 'Cancel' : 'Add Transaction'}
         </button>
+        </div>
+        {successMessage && <p className="success">{successMessage}</p>}
+        {error && <p className="error">{error}</p>}
+        
       </div>
+
     </React.Fragment>
   );
 };

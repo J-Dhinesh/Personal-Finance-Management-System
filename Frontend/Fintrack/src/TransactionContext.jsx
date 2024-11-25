@@ -4,11 +4,11 @@ export const TransactionContext = createContext();
 
 export const TransactionProvider = ({ children }) => {
   const [transactions, setTransactions] = useState([
-    { id: 1, type: "income", amount: 2000, date: "2024-11-01" },
-    { id: 2, type: "expense", amount: 500, date: "2024-11-05" },
-    { id: 3, type: "expense", amount: 150, date: "2024-11-10" },
-    { id: 4, type: "income", amount: 1000, date: "2024-11-15" },
-    { id: 5, type: "expense", amount: 300, date: "2024-11-18" },
+    { id: 1, type: "income", amount: 0, date: "2024-11-01" },
+    { id: 2, type: "expense", amount: 0, date: "2024-11-05" },
+    { id: 3, type: "expense", amount: 0, date: "2024-11-10" },
+    { id: 4, type: "income", amount: 0, date: "2024-11-15" },
+    { id: 5, type: "expense", amount: 0, date: "2024-11-18" },
   ]);
 
   // Add a new transaction
