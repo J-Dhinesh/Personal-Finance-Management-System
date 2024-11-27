@@ -178,7 +178,6 @@ const Bill = ({ onNotificationAdded, onClearNotifications }) => {
             <tr>
               <td>Bill Name</td>
               <td>Bill Description</td>
-              <td>Notify Time</td>
               <td>Due Date</td>
               <td>Amount</td>
             </tr>
@@ -189,7 +188,6 @@ const Bill = ({ onNotificationAdded, onClearNotifications }) => {
                 <tr key={index}>
                   <td>{bill.billName}</td>
                   <td>{bill.billDescription}</td>
-                  <td>{new Date(bill.billNotify).toLocaleString()}</td>
                   <td>{new Date(bill.billDate).toLocaleDateString()}</td>
                   <td>{bill.billAmount}</td>
                 </tr>

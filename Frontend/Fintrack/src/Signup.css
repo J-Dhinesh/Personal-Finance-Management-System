@@ -10,6 +10,7 @@
 .signup-container p{
     font-size: 24px;
     margin: 5px;
+    margin-bottom: 15px;
 }
 .signup-interior {
     width:70vw;
@@ -87,4 +88,26 @@
     color:red;
     padding:10px;
     margin:5px;
+}
+.password-strength {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.password-strength.weak {
+    color: red;
+}
+
+.password-strength.moderate {
+    color: orange;
+}
+
+.password-strength.strong {
+    color: green;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
 }

@@ -124,5 +124,7 @@
   color: red;
 }
 .dashboard-container .bill-board li{
+  background-color: beige;
+  padding: 5px;
   margin:10px 0;
 }

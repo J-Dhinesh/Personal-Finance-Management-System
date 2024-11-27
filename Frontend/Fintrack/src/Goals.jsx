@@ -39,6 +39,10 @@ const Goals = () => {
       if (response2.status === 200) {
         setTransactions(response2.data);
         toggleOverlay();
+        setGoalsDetails({
+          goalName: '',
+          goalAmount: ''
+        })
         const response = await axios.get(
           `http://localhost:9000/home/goals?username=${username}`
         );
@@ -135,9 +139,9 @@ const Goals = () => {
             goals.map((goal, index) => {
               const spentAmount = calculateSpentAmount(goal.goalName);
               const remainingAmount = parseFloat(goal.goalAmount) - spentAmount;
-              const spentPercentage = Math.min((spentAmount / goal.goalAmount) * 100, 100); // Ensure it does not exceed 100%
+              const spentPercentage = Math.min((spentAmount / goal.goalAmount) * 100, 100);
 
-              // Determine if the progress bar should be red
+              
               const progressBarColor = spentPercentage >= 80 ? 'red' : '#007bff';
 
               return (
@@ -152,7 +156,7 @@ const Goals = () => {
                   {remainingAmount < 0 && (
                     <p className="overspending">Overspending!</p>
                   )}
-                  {remainingAmount >= 0 && spentPercentage > 80 && remainingAmount > 0 && (
+                  {remainingAmount >= 0 && spentPercentage > 80 && (
                     <p className="spend-warning">Spend accordingly!</p>
                   )}
                   <div className="goal-progress">

@@ -15,7 +15,7 @@
 .bill-container tr{
     width:100%;
     display: grid;
-    grid-template-columns: 15% 25% 20% 20% 20%;
+    grid-template-columns: 25% 25% 25% 25%;
     text-align: center;
 }
 .bill-container td{

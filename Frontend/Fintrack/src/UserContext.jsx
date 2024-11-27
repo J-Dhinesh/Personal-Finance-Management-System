@@ -5,14 +5,11 @@ export const UserContext =createContext();
 export const UserProvider = ({children})=>{
     
     const  [username, setUsername] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false); 
-    useEffect(() => {
-        localStorage.setItem('isAuthenticated', isAuthenticated);
-    }, [isAuthenticated]);
+    
 
     return(
         <React.Fragment>
-        <UserContext.Provider value={{username, setUsername,isAuthenticated,setIsAuthenticated}}>
+        <UserContext.Provider value={{username, setUsername}}>
             {children}
         </UserContext.Provider>
         </React.Fragment>

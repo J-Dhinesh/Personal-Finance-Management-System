@@ -8,7 +8,6 @@ const Transaction = () => {
     date: '',
     goal: '',
     accountNumber: '',
-    transactionId: '',
     transactionType: '',
     amount: ''
   });
@@ -16,10 +15,11 @@ const Transaction = () => {
   const [isFormVisible, setFormVisible] = useState(false);
   const [transactions, setTransactions] = useState([]);
   const [successMessage, setSuccessMessage] = useState('');
+  const [accountNumbers, setAccountNumbers] = useState([]);
   const [error, setError] = useState('');
   const { username } = useContext(UserContext);
   
-  // Pagination state
+  
   const [currentPage, setCurrentPage] = useState(1);
   const entriesPerPage = 10;
 
@@ -37,7 +37,6 @@ const Transaction = () => {
       try {
         const response = await axios.get(`http://localhost:9000/home/transaction?username=${username}`);
         if (response.status === 200) {
-          // Sort transactions by date in descending order
           const sortedTransactions = response.data.sort((a, b) => new Date(b.date) - new Date(a.date));
           setTransactions(sortedTransactions); 
         } else {
@@ -48,8 +47,23 @@ const Transaction = () => {
       }
     };
 
+    const fetchAccountNumbers = async () => {
+      try {
+        const response = await axios.get(`http://localhost:9000/home/balance?username=${username}`);
+        if (response.status === 200) {
+          const accountNumbersList = response.data.map(account => account.accountNumber);
+          setAccountNumbers(accountNumbersList);
+        } else {
+          setError('Failed to fetch account numbers.');
+        }
+      } catch (error) {
+        setError('Error fetching account numbers. Please try again later.');
+      }
+    };
+
     if (username) {
       fetchTransactions();
+      fetchAccountNumbers();
     }
   }, [username]);
 
@@ -80,14 +94,12 @@ const Transaction = () => {
         date: '',
         goal: '',
         accountNumber: '',
-        transactionId: '',
         transactionType: '',
         creditOrDebit: '',
         amount: ''
       });
       setFormVisible(false);
       const updatedResponse = await axios.get(`http://localhost:9000/home/transaction?username=${username}`);
-      // Sort transactions by date in descending order
       const sortedTransactions = updatedResponse.data.sort((a, b) => new Date(b.date) - new Date(a.date));
       setTransactions(sortedTransactions);
     }
@@ -129,24 +141,20 @@ const Transaction = () => {
                   placeholder='Enter the Goal' 
                   required
                 />
-                <label htmlFor="transactionAccNumber">Account Number:</label>
-                <input 
-                  type="text" 
-                  name="accountNumber" 
+                 <label htmlFor="transactionAccNumber">Account Number:</label>
+                <select
+                  name="accountNumber"
                   value={transactionDetails.accountNumber}
                   onChange={handleChange}
-                  placeholder='Enter Account Number'
                   required
-                />
-                <label htmlFor="transactionId">Transaction ID:</label>
-                <input 
-                  type="text" 
-                  name="transactionId" 
-                  value={transactionDetails.transactionId}
-                  onChange={handleChange}
-                  placeholder='Enter Transaction ID' 
-                  required
-                />
+                >
+                  <option value="">Select Account Number</option>
+                  {accountNumbers.map((account, index) => (
+                    <option key={index} value={account}>
+                      {account}
+                    </option>
+                  ))}
+                </select>
                 <label htmlFor="transactionType">Transaction Type:</label>
                 <input 
                   type="text" 
@@ -188,7 +196,6 @@ const Transaction = () => {
               <th>Date</th>
               <th>Goal</th>
               <th>Account Number</th>
-              <th>Transaction ID</th>
               <th>Type of Transaction</th>
               <th>Amount</th>
             </tr>
@@ -200,7 +207,6 @@ const Transaction = () => {
                   <td>{transaction.date}</td>
                   <td>{transaction.goal}</td>
                   <td>{transaction.accountNumber}</td>
-                  <td>{transaction.transactionId}</td>
                   <td>{transaction.transactionType}</td>
                   <td className={`${transaction.creditOrDebit === 'debit' ? 'money-spent' : 'money-received'}`}>
                     {transaction.amount}

@@ -12,7 +12,6 @@ public class Transaction {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public int id;
 	public String goal;
-	public String transactionId;
 	public String accountNumber;
 	public String username;
 	public String transactionType;
@@ -29,12 +28,11 @@ public class Transaction {
 
 	// Public Parameterized Constructor
 	
-	public Transaction(int id, String goal, String transactionId, String accountNumber, String username,
+	public Transaction(int id, String goal, String accountNumber, String username,
 			String transactionType,String creditOrDebit, String date, int amount) {
 		super();
 		this.id = id;
 		this.goal = goal;
-		this.transactionId = transactionId;
 		this.accountNumber = accountNumber;
 		this.username = username;
 		this.transactionType = transactionType;
@@ -62,13 +60,7 @@ public class Transaction {
 		this.goal = goal;
 	}
 
-	public String getTransactionId() {
-		return transactionId;
-	}
-
-	public void setTransactionId(String transactionId) {
-		this.transactionId = transactionId;
-	}
+	
 
 	public String getAccountNumber() {
 		return accountNumber;
@@ -120,7 +112,7 @@ public class Transaction {
 
 	@Override
 	public String toString() {
-		return "Transaction [id=" + id + ", goal=" + goal + ", transactionId=" + transactionId + ", accountNumber="
+		return "Transaction [id=" + id + ", goal=" + goal + ", accountNumber="
 				+ accountNumber + ", username=" + username + ", transactionType=" + transactionType + ", creditOrDebit="
 				+ creditOrDebit + ", date=" + date + ", amount=" + amount + "]";
 	}

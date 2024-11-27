@@ -57,6 +57,27 @@
     border:none;
     border-radius: 35px;
 }
+.password-container {
+    display: flex;
+    justify-content: center;
+}
+.password-container input{
+    width:65%;
+    margin-right: 5px;
+}
+.password-container button{
+    width:15%;
+    border-radius: 10px;
+}
+.password-container button img{
+    width: 20px;
+    height: 20px;
+}
+.signin-content .error-message {
+    margin:10px 0;
+    font-size: 21px;
+    color:red;
+}
 .signup-content{
     box-sizing: border-box;
     color:white;

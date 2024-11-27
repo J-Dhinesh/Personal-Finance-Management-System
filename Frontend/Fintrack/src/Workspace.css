@@ -70,4 +70,19 @@ nav ul a{
     font-weight: 600; 
 }
 
+.account-centre button
+{
+    height:75%;
+    background-color:#3F00FF;
+    margin-top: 10px;
+    margin-left:55px;
+}
+.account-centre button:hover{
+    background-color: black;
+    transform: scale(1.10);
+}
+.account-centre button img{
+    padding:0;
+    background-color: rgba(0, 0, 0, 0);
+}
 

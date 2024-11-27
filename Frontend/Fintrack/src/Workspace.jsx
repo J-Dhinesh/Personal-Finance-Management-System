@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Navigate, NavLink, useLocation, useNavigate } from "react-router-dom";
 import dashboard from "./image/business-analysis.png";
 import balance from "./image/wallet.png";
 import transaction from "./image/transaction.png";
@@ -7,14 +7,20 @@ import bills from "./image/bill.png";
 import expense from "./image/menu.png";
 import goals from "./image/target.png";
 import profile from "./image/user.png";
+import signout from "./image/exit.png";
 import "./Workspace.css";
 import { UserContext } from "./UserContext";
+import Signin from "./Signin"
 
 const Workspace = () => {
-    const { username } = useContext(UserContext);
+    const { username ,setUsername} = useContext(UserContext);
+    const navigate=useNavigate();
     const location = useLocation();
+    const Signout=()=>{
+        setUsername(false);
+        navigate('/')
+    }
 
-    // Define the menu items with their corresponding paths
     const menuItems = [
         { path: "/home/dashboard", icon: dashboard, label: "Dashboard" },
         { path: "/home/balance", icon: balance, label: "Balance" },
@@ -45,6 +51,8 @@ const Workspace = () => {
                     <div className="accounts">
                         <img src={profile} alt="profile pic" />
                         <h5>{username}</h5>
+                        <button onClick={Signout} ><img src={signout}/></button>
+                        
                     </div>
                 </div>
             </div>
