@@ -43,7 +43,14 @@ const Balance = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setCardDetails({ ...cardDetails, [name]: value });
+        if (name === "accountNumber") {
+            const numericValue = value.replace(/\D/g, "");
+            if (numericValue.length > 16) return;            
+            const formattedValue = numericValue.replace(/(\d{4})(?=\d)/g, "$1 ");
+            setCardDetails({ ...cardDetails, [name]: formattedValue });
+        } else {
+            setCardDetails({ ...cardDetails, [name]: value });
+        }
     };
 
     const handleSubmit = async (e) => {

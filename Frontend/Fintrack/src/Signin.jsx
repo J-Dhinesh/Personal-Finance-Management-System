@@ -21,11 +21,14 @@ const Signin = () => {
 
         const usernameValue = username.current.value.trim();
         const passwordValue = password.current.value.trim();
-        if (!usernameValue || !passwordValue) {
-            setErrorMessage('Username and Password cannot be empty.');
+        if (!usernameValue ) {
+            setErrorMessage('Username cannot be empty.');
             return;
         }
-
+        if (!passwordValue ) {
+            setErrorMessage('Password cannot be empty.');
+            return;
+        }
         PostEx(usernameValue, passwordValue);
     };
 

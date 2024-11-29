@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import logo from "./image/capital-venture.png";
 import notify from "./image/bell.png";
-import search from "./image/search.png";
 import "./Header.css";
 import { UserContext } from "./UserContext";
 import axios from "axios";
@@ -85,14 +84,7 @@ const Header = ({ buttonColor,onClearNotifications }) => {
                   className={notifications.length > 0 ? "has-notification" : ""}
                 />
               </button>
-              <button>
-                <img src={search} alt="search icon" />
-              </button>
-              <input
-                type="text"
-                name="search"
-                placeholder="Search here or ask me something"
-              />
+             
             </div>
           </div>
         </div>

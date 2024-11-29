@@ -14,16 +14,17 @@ const Signup = () => {
         setErrorMessage(''); 
         setRes('');
 
-        // Validate input fields
         const usernameValue = username.current.value.trim();
         const passwordValue = password.current.value.trim();
 
         if (!usernameValue) {
+            setPasswordStrength('');
             setErrorMessage('Username cannot be empty.');
             return;
         }
 
         if (!passwordValue) {
+            setPasswordStrength('');
             setErrorMessage('Password cannot be empty.');
             return;
         }
@@ -39,6 +40,7 @@ const Signup = () => {
             });
 
             if (response.status === 200) {
+                setPasswordStrength("");
                 setRes("New User has been added Successfully!");
             } else {
                 setRes("User Registration failed");

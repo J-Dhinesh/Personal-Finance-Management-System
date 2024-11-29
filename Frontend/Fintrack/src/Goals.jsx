@@ -150,9 +150,9 @@ const Goals = () => {
                     <div className="goal-shape"></div>
                     <h2>{goal.goalName}</h2>
                   </div>
-                  <p><strong>Goal Amount:</strong> ${goal.goalAmount}</p>
-                  <p><strong>Amount Spent:</strong> ${spentAmount}</p>
-                  <p><strong>Remaining Amount:</strong> ${remainingAmount}</p>
+                  <p><strong>Goal Amount:</strong> ₹{goal.goalAmount}</p>
+                  <p><strong>Amount Spent:</strong> ₹{spentAmount}</p>
+                  <p><strong>Remaining Amount:</strong> ₹{remainingAmount}</p>
                   {remainingAmount < 0 && (
                     <p className="overspending">Overspending!</p>
                   )}
