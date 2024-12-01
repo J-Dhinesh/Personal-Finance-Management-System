@@ -16,7 +16,7 @@ const Launchpage=()=>{
           </div>
           <div className="launchpage-options">
             <Link to='/signin'><button>Log in</button></Link>
-            <Link to='/signup'><button>Sign Up for free</button></Link>
+            <Link to='/signup'><button>Sign Up</button></Link>
           </div>
         </div>
         <div className="launchpage-content-container">

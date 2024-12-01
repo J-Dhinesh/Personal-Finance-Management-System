@@ -99,11 +99,12 @@ const Expenses = () => {
   return (
     <div className='expense-container'>
       <h1>Expense Breakdown</h1>
-      <Bar
+      <div className="bar-chart">
+      <Bar 
         data={monthlyData}
         options={{
-          responsive: false,
-          maintainAspectRatio: false,
+          responsive: true,
+          maintainAspectRatio: true,
           scales: {
             y: {
               beginAtZero: true,
@@ -118,6 +119,7 @@ const Expenses = () => {
         height={500}
         width={900}
       />
+      </div>
     </div>
   );
 };

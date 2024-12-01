@@ -189,14 +189,14 @@ const Transaction = () => {
             </div>
           </div>
         )}
-
-        <table>
+        <div className="table-section">
+        <table >
           <thead>
             <tr>
               <th>Date</th>
               <th>Goal</th>
               <th>Account Number</th>
-              <th>Type of Transaction</th>
+              <th>Transaction Type</th>
               <th>Amount</th>
             </tr>
           </thead>
@@ -220,6 +220,7 @@ const Transaction = () => {
             )}
           </tbody>
         </table>
+        </div>
         <div className='bottom'>
         <div className="pagination">
           <button onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} disabled={currentPage === 1}>

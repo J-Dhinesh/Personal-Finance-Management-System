@@ -81,3 +81,21 @@
 .bill-container .bottom span{
     padding: 20px;
 }
+@media only screen and (max-width:640px)
+{
+    .bill-container{
+        padding: 0;
+    }
+}
+@media only screen and (max-width:460px)
+{
+    .bill-container table th , .bill-container table td
+    {
+        padding:8px 0;
+        font-size: 0.8rem;
+    }
+    .bill-container h1{
+        font-size: 1.5rem;
+    }
+    
+}

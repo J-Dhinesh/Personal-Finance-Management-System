@@ -4,11 +4,39 @@ import notify from "./image/bell.png";
 import "./Header.css";
 import { UserContext } from "./UserContext";
 import axios from "axios";
-
+import signout from './image/exit.png'
+import { useNavigate,useLocation, Link} from "react-router-dom";
+import menubar from './image/menubar.png';
+import dashboard from "./image/business-analysis.png";
+import balance from "./image/wallet.png";
+import transaction from "./image/transaction.png";
+import bills from "./image/bill.png";
+import expense from "./image/menu.png";
+import goals from "./image/target.png";
 const Header = ({ buttonColor,onClearNotifications }) => {
-  const { username } = useContext(UserContext);
+  const { username ,setUsername} = useContext(UserContext);
+  const navigate=useNavigate();
+  const location = useLocation();
   const [notifications, setNotifications] = useState([]);
   const [isOverlayVisible, setOverlayVisible] = useState(false);
+  const [isMenuVisible,setMenuVisible]=useState(false);
+  
+  const menuItems = [
+    { path: "/home/dashboard", icon: dashboard, label: "Dashboard" },
+    { path: "/home/balance", icon: balance, label: "Balance" },
+    { path: "/home/transaction", icon: transaction, label: "Transaction" },
+    { path: "/home/bills", icon: bills, label: "Bills" },
+    { path: "/home/expenses", icon: expense, label: "Expenses" },
+    { path: "/home/goals", icon: goals, label: "Goals" },
+];
+
+  const Signout=()=>{
+    setUsername(false);
+    navigate('/')
+}
+const showMenu = () => {
+  setMenuVisible(!isMenuVisible);
+}
 
   const toggleOverlay = async () => {
     if (!isOverlayVisible) {
@@ -66,10 +94,54 @@ const Header = ({ buttonColor,onClearNotifications }) => {
   return (
     <React.Fragment>
       <div className="header-container">
+
+         {/* Menu overlay for small resolution devices */}
+
+        <div className="menuimg">
+          <button><img src={menubar} alt="Menu Bar" onClick={showMenu}/></button>
+          { isMenuVisible &&
+            (
+              <div className="menu-top-overlay">
+                <div className="menu-overlay">
+                <nav>
+                        <ul>
+                            {menuItems.map((item) => (
+                                <Link to={item.path} key={item.path} className="link" onClick={showMenu}>
+                                    <li className={location.pathname === item.path ? "active" : ""}>
+                                        <img src={item.icon} alt="icon" />
+                                        <h4>{item.label}</h4>
+                                    </li>
+                                </Link>
+                            ))}
+                        </ul>
+                    </nav>
+                </div>
+              </div>
+            )
+
+          }
+        </div>
+
+
         <div className="companyname">
           <img src={logo} alt="Company logo" />
           <h1>Fintrack</h1>
         </div>
+
+         {/* Tools for smaller resolution devices */}
+
+        <div className="tools-for-small-size">
+            <button style={{ backgroundColor: buttonColor }} onClick={toggleOverlay}>
+                <img
+                  src={notify}
+                  alt="notification bar"
+                  className={notifications.length > 0 ? "has-notification" : ""}
+                />
+              </button>
+              <button className="signout-btn" onClick={Signout} ><img src={signout}/></button>   
+        </div>
+
+
         <div className="menu-field">
           <div className="inside-container">
             <div className="text">
@@ -84,6 +156,7 @@ const Header = ({ buttonColor,onClearNotifications }) => {
                   className={notifications.length > 0 ? "has-notification" : ""}
                 />
               </button>
+              <button className="signout-btn" onClick={Signout} ><img src={signout}/></button>
              
             </div>
           </div>

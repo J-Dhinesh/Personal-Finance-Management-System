@@ -5,3 +5,12 @@
     flex-direction: column;
     align-items: center;
 }
+@media only screen and (max-width:950px)
+{
+    .bar-chart {
+        height: 200px;
+        display: flex;
+        align-items: center;
+      }
+      
+}

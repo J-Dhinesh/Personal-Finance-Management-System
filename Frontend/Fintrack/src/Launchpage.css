@@ -3,80 +3,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 
-@media (max-width: 768px) {
-    .launchpage {
-        height: auto; 
-    }
 
-    .launchpage-titlebar {
-        flex-direction: column; 
-        align-items: center; 
-    }
-
-    .launchpage-cmpyname {
-        width: 80vw; 
-        justify-content: center; 
-    }
-
-    .launchpage-options {
-        width: 100%; 
-        justify-content: center; 
-        margin-top: 10px; 
-    }
-
-    .launchpage-options button {
-        width: 80%; 
-        margin: 5px 0; 
-    }
-
-    .launchpage-content {
-        margin: 0 5%; 
-    }
-
-    .launchpage-content h1 {
-        font-size: 36px; 
-    }
-
-    .launchpage-content p {
-        font-size: 16px; 
-    }
-
-    .launchpage-content button {
-        width: 90%; 
-        margin: 5% 0; 
-    }
-
-    .launchpage-feature {
-        flex-direction: column; 
-        align-items: center;
-    }
-
-    .launchpage-feature-card {
-        margin: 10px 0; 
-    }
-}
-
-@media (max-width: 480px) {
-    .launchpage-cmpyname h1 {
-        font-size: 36px; 
-    }
-
-    .launchpage-content h1 {
-        font-size: 28px; 
-    }
-
-    .launchpage-options button {
-        font-size: 16px; 
-    }
-
-    .launchpage-content p {
-        font-size: 14px; 
-    }
-}
 .launchpage{
     
     width:100vw;
-    height:100vh;
     background-image: url(image/Background.jpg);
     background-size: cover;
     background-repeat: no-repeat;
@@ -85,7 +15,6 @@
     font-weight: 400;
     font-size: 18px;
     display: grid;
-    grid-template-rows: 15% 85%;
 }
 img{
     width: 56px;
@@ -110,7 +39,7 @@ img{
     display: flex;
     grid-row: 1/2;
     width: 100%;
-    justify-content: space-around;
+    
 }
 .launchpage-content{
     grid-row: 2/3;
@@ -140,7 +69,6 @@ img{
     font-size: 18px;
     font-family: "Roboto",sans-serif;
     font-weight: bold;
-    border: none;
 }
 .launchpage-options button{
     height: 60%;
@@ -161,11 +89,12 @@ img{
 }
 .launchpage-content{
     height: 100%;
-    margin:0 33%;
+    margin:0 30%;
     text-align: center;
 }
 .launchpage-content h1,.launchpage-content p , .launchpage-content-feature{
     margin:10% 0;
+
 }
 .launchpage-content button{
     width: 40%;
@@ -204,4 +133,113 @@ img{
 }
 .launchpage-content a{
     text-decoration: none;
+}
+@media only screen and (max-width:479px){
+    .launchpage{
+        height:auto;
+        background-image: none;
+        background-color: black;
+        font-size: 1rem;
+        color: white;
+    }
+    .launchpage-content{
+        margin:0 10%;
+    }
+    .launchpage-content-container{
+        height: auto;
+    }
+    .launchpage-content h1{
+        font-size: 2.5rem;
+    }
+    .launchpage-feature{
+        flex-direction: column;
+        margin:30px 0;
+    }
+    .launchpage-feature-card{
+        padding:10px 20px;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid white;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+    .launchpage-feature-card img{
+        padding: 0;
+    }
+    .launchpage-options {
+        width:0;
+        display: none;
+    }
+    .launchpage-cmpyname{
+        width: 100%;
+        justify-content: center;
+    }
+    .launchpage-cmpyname h1{
+        padding:0 20px;
+    }
+    .launchpage-content button{
+        width:80%;
+        margin:0 10%;
+    }
+    .launchpage-titlebar{
+        height: 80px;
+    }
+}
+@media only screen and (min-width:480px) and (max-width:768px)
+{
+    .launchpage{
+        height:auto;
+        background-image: none;
+        background-color: black;
+        font-size: 1rem;
+        color: white;
+    }
+    .launchpage-content{
+        margin:0 10%;
+    }
+    .launchpage-content-container{
+        height: auto;
+    }
+    .launchpage-content h1{
+        font-size: 3rem;
+    }
+    .launchpage-feature{
+        flex-direction: column;
+        margin:30px 0;
+    }
+    .launchpage-feature-card{
+        padding:10px 20px;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid white;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+    .launchpage-feature-card img{
+        padding: 0;
+    }
+    .launchpage-options a{
+        border: 1px solid white;
+        font-size: 16px;
+        border-radius: 10px;
+        margin-right: 5px;
+        width:70px;
+    }
+    .launchpage-titlebar{
+        justify-content: space-evenly;
+        height: 80px;
+    }
+}
+@media only screen and (min-width:769px)
+
+{
+    .launchpage{
+        height:100vh;
+    }
+    .launchpage-titlebar{
+        justify-content: space-around;
+    }
+    .launchpage-options button{    
+        grid-template-rows: 15% 85%;
+    }
 }

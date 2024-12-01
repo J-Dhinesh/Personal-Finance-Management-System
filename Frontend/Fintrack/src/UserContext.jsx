@@ -1,18 +1,23 @@
-/* eslint-disable react/prop-types */
-import React,{createContext,useState,useEffect} from 'react'
+import React, { createContext, useState, useEffect } from 'react';
 
-export const UserContext =createContext();
-export const UserProvider = ({children})=>{
-    
-    const  [username, setUsername] = useState(null);
-    
+export const UserContext = createContext();
 
-    return(
-        <React.Fragment>
-        <UserContext.Provider value={{username, setUsername}}>
-            {children}
-        </UserContext.Provider>
-        </React.Fragment>
-    )
+export const UserProvider = ({ children }) => {
+  const [username, setUsername] = useState(() => {
+    return localStorage.getItem('username') || null;
+  });
+
+  useEffect(() => {
+    if (username) {
+      localStorage.setItem('username', username);
+    } else {
+      localStorage.removeItem('username');
+    }
+  }, [username]);
+
+  return (
+    <UserContext.Provider value={{ username, setUsername }}>
+      {children}
+    </UserContext.Provider>
+  );
 };
-

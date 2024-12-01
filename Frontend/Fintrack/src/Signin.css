@@ -107,3 +107,68 @@
     font-size: medium;
     color: red;
 }
+@media only screen and (min-width:480px) and (max-width:768px)
+{
+    .login-container{
+        align-items: normal;
+        height: auto;
+        background-color: white;
+    }
+    .login-interior{
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        margin: 20px 0;
+        width: 60%;
+    }
+    .signup-content{
+        order: 1;
+        width: 100%;
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
+        border-bottom-right-radius: 0;
+    }
+    
+    .signin-content{
+        order: 2;
+        width: 100%;
+    }
+    
+}
+@media only screen and (max-width:479px)
+{
+    .login-container{
+        height: fit-content;
+        justify-content: normal;
+        align-items: normal;
+        background-color: white;
+    }
+    .login-interior{
+        margin: 20px 0;
+        width: 100%;
+        height: fit-content;
+        flex-direction: column;
+    }
+    .signin-content{
+        order:2;
+        width: 100%;
+    }
+    .signup-content h1{
+        font-size: 2.5rem;
+    }
+    .signup-content p{
+        font-size: 1rem;
+    }
+    .signup-content{
+        width: 100%;
+        order: 1;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    .signin-content h1{
+        font-size: 2.5rem;
+    }
+    .signin-content p{
+        font-size: 1rem;
+    }
+}

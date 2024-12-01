@@ -22,7 +22,6 @@
     height:20%;
     width:100%;
     display: flex;
-    border-bottom: 1px solid grey;
 }
 .menu-list ul li h4{
     margin:15px 0;
@@ -51,9 +50,14 @@ nav ul a{
     width:90%;
     height:28%;
     display: flex;
+    justify-content: space-around;
+    align-items: center;
     background-color: #3F00FF;
     margin-bottom: 10px;
     border-radius: 25px;
+}
+.accounts .profile{
+    display: flex;
 }
 .accounts img{
     width:40px;
@@ -66,6 +70,7 @@ nav ul a{
 
 .menu-list li.active {
     background-color: #3F00FF; 
+    border-radius: 20px;
     color: white;
     font-weight: 600; 
 }
@@ -74,8 +79,7 @@ nav ul a{
 {
     height:75%;
     background-color:#3F00FF;
-    margin-top: 10px;
-    margin-left:55px;
+    
 }
 .account-centre button:hover{
     background-color: black;
@@ -86,3 +90,38 @@ nav ul a{
     background-color: rgba(0, 0, 0, 0);
 }
 
+@media only screen and (max-width:1200px)
+{
+    .account-centre{
+        display: none;
+        width: 0;
+        height: 0;
+    }
+    .menu-list ul{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        width:100%;
+    }
+    .menu-list ul li {
+        height: 100%;
+    }
+    .menu-list ul li h4{
+        padding:5px 10px;
+        margin:0;
+    }
+    .menu-list li.active{
+        border-radius: 10px;
+        box-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.2) inset;
+        
+    }
+    .menu-list li.active h4{
+        color: white;
+    }
+    .menu-list ul a.link{
+        display: block;
+    }
+    .menu-list ul li img{
+        display: none;
+    }
+}

@@ -111,3 +111,71 @@
     font-size: 14px;
     margin-bottom: 10px;
 }
+@media only screen and (min-width:480px) and (max-width:768px)
+{
+
+    .signup-container{
+        align-items: normal;
+        height: auto;
+        background-color: white;
+    }
+    .signup-interior{
+        flex-direction: column;
+        height: auto;        
+        margin:20px 0;
+        width:60%;
+        height: fit-content;
+    }
+    .login-content,.register-content{
+        width: 100%;
+    }
+    .login-content{
+        border-top-right-radius: 15px;
+        border-bottom-left-radius: 0%;
+    }
+    .login-content h1{
+        font-size: 2.5rem;
+    }
+    .login-content p{
+        font-size: 1rem;
+    }
+    .register-content h1{
+        font-size: 2.5rem;
+    }
+    
+}
+@media only screen and (max-width:479px){
+    .signup-container{
+        margin:20px 0;
+        display: block;
+        height: fit-content;
+        background-color: white;
+        
+    }
+    .signup-interior{
+        width: 100vw;
+        height: auto;
+        display: block;
+    }
+    .login-content{
+        width: 100%;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    .login-content h1{
+        font-size: 2.5rem;
+    }
+    .login-content p{
+        font-size: 1rem;
+    }
+    .register-content{
+        width: 100%;
+        
+    }
+    .register-content h1{
+        font-size: 2.5rem; 
+    }
+    .register-content p {
+        font-size: 1rem;
+    }
+}

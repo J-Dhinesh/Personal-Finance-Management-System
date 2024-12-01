@@ -23,13 +23,26 @@ const Signup = () => {
             return;
         }
 
+        if(usernameValue.length<4)
+        {
+            setPasswordStrength('');
+            setErrorMessage("Username must have more than 4 characters");
+            return;
+        }
         if (!passwordValue) {
             setPasswordStrength('');
             setErrorMessage('Password cannot be empty.');
             return;
         }
-
-        postEx(usernameValue, passwordValue);
+        if(passwordStrength==='Strong')
+        {
+            postEx(usernameValue, passwordValue);
+        }else
+        {
+            setPasswordStrength('');
+            setErrorMessage('Enter a strong password');
+            return;
+        }
     };
 
     const postEx = async (usernameValue, passwordValue) => {

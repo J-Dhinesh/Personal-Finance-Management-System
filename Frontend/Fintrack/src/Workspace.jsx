@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, Navigate, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import dashboard from "./image/business-analysis.png";
 import balance from "./image/wallet.png";
 import transaction from "./image/transaction.png";
@@ -10,8 +10,6 @@ import profile from "./image/user.png";
 import signout from "./image/exit.png";
 import "./Workspace.css";
 import { UserContext } from "./UserContext";
-import Signin from "./Signin"
-
 const Workspace = () => {
     const { username ,setUsername} = useContext(UserContext);
     const navigate=useNavigate();
@@ -37,7 +35,7 @@ const Workspace = () => {
                     <nav>
                         <ul>
                             {menuItems.map((item) => (
-                                <Link to={item.path} key={item.path}>
+                                <Link to={item.path} key={item.path} className="link">
                                     <li className={location.pathname === item.path ? "active" : ""}>
                                         <img src={item.icon} alt="icon" />
                                         <h4>{item.label}</h4>
@@ -49,10 +47,11 @@ const Workspace = () => {
                 </div>
                 <div className="account-centre">
                     <div className="accounts">
-                        <img src={profile} alt="profile pic" />
-                        <h5>{username}</h5>
+                        <div className="profile">
+                            <img src={profile} alt="profile pic" />
+                            <h5>{username}</h5>
+                        </div>
                         <button onClick={Signout} ><img src={signout}/></button>
-                        
                     </div>
                 </div>
             </div>
