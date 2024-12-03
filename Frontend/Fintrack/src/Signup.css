@@ -6,11 +6,23 @@
     align-items: center;
     background-color: #BEBEBE;
     font-family:Arial, sans-serif;
+    background-image: url(image/login-bg.jpeg);
+}
+.error-message {
+    color: red;
+    font-size: 10px;
+    padding:10px;
+    padding-top: 0;
+    margin: 0;
 }
 .signup-container p{
-    font-size: 24px;
-    margin: 5px;
-    margin-bottom: 15px;
+    font-size: 18px;
+}
+.signup-container p:last-of-type{
+    margin-top: 0;
+}
+.signup-container .launchpage-cmpyname, .footer{
+    display: none;
 }
 .signup-interior {
     width:70vw;
@@ -22,7 +34,7 @@
 }
 .login-content{
     width: 50%;
-    background-color: #410200;
+    background-color: #0A2472;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
 }
@@ -30,11 +42,11 @@
     text-align: center;
     box-sizing: border-box;
     width:50%;
-    padding: 5%;
+    padding: 2%;
 }
 .register-content h1{
-    margin: 15px;
-    font: 48px bolder ;
+    margin: 10px;
+    font: 42px bolder ;
     font-family: sans-serif;
     font-weight: bolder;
 }
@@ -43,14 +55,14 @@
     padding: 15px;
     padding-left: 10px;
     font-size: 18px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     border-radius: 5px;
     background-color: #D3D3D3;
     border: none;
 }
 .register-content button{
     width:80%;
-    background-color: #410200;
+    background-color: #0A2472;
     height:3rem;
     font-family: sans-serif;
     font:18px bolder;
@@ -76,7 +88,7 @@
 .login-content button{
     width:80%;
     height:3rem;
-    background-color: #410200;
+    background-color: #0A2472;
     font-family: sans-serif;
     font:18px bolder;
     color: white;
@@ -87,10 +99,10 @@
     font-size: medium;
     color:red;
     padding:10px;
-    margin:5px;
+    margin:0;
 }
 .password-strength {
-    font-size: 14px;
+    font-size: 10px;
     margin-top: 5px;
 }
 
@@ -106,18 +118,31 @@
     color: green;
 }
 
-.error-message {
-    color: red;
-    font-size: 14px;
-    margin-bottom: 10px;
+
+.result{
+    height: 14px;
 }
 @media only screen and (min-width:480px) and (max-width:768px)
 {
 
     .signup-container{
-        align-items: normal;
+        flex-direction: column;
+        align-items: center;
         height: auto;
         background-color: white;
+        background-image: none;
+    }
+    .signup-container .launchpage-cmpyname,.signup-container .footer{
+        display: block;
+        width:100%;
+    }
+    .signup-container .launchpage-cmpyname{
+        background-color: #0A2472;
+        height: 120px;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .signup-interior{
         flex-direction: column;
@@ -146,16 +171,27 @@
 }
 @media only screen and (max-width:479px){
     .signup-container{
-        margin:20px 0;
         display: block;
         height: fit-content;
-        background-color: white;
+        background-color: #0A2472;
+        background-image: none;
         
+    }
+    .signup-container .launchpage-cmpyname{
+        display: flex;
+        color: white;
+        height: 80px;
+    }
+    .footer{
+        display: block;
     }
     .signup-interior{
         width: 100vw;
         height: auto;
         display: block;
+        box-shadow: none;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
     }
     .login-content{
         width: 100%;
@@ -163,17 +199,17 @@
         border-bottom-left-radius: 0;
     }
     .login-content h1{
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
     .login-content p{
         font-size: 1rem;
     }
     .register-content{
         width: 100%;
-        
+        padding-bottom: 50px;
     }
     .register-content h1{
-        font-size: 2.5rem; 
+        font-size: 2rem; 
     }
     .register-content p {
         font-size: 1rem;

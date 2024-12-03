@@ -13,6 +13,9 @@ import transaction from "./image/transaction.png";
 import bills from "./image/bill.png";
 import expense from "./image/menu.png";
 import goals from "./image/target.png";
+import wlogo from "./image/earning.png";
+import Footer from  "./Footer";
+
 const Header = ({ buttonColor,onClearNotifications }) => {
   const { username ,setUsername} = useContext(UserContext);
   const navigate=useNavigate();
@@ -124,8 +127,9 @@ const showMenu = () => {
 
 
         <div className="companyname">
-          <img src={logo} alt="Company logo" />
-          <h1>Fintrack</h1>
+          <img className="blue-logo" src={logo} alt="Company logo" />
+          <img className="white-logo" src={wlogo} alt="Company logo" />
+          <h1>WealthWise</h1>
         </div>
 
          {/* Tools for smaller resolution devices */}
@@ -177,8 +181,10 @@ const showMenu = () => {
             ) : (
               <p>No notifications available</p>
             )}
+            <div className="control-btns">
             <button onClick={deleteMapping}>Clear All</button>
             <button onClick={toggleOverlay}>Close</button>
+            </div>
           </div>
         </div>
       )}

@@ -134,13 +134,23 @@ img{
 .launchpage-content a{
     text-decoration: none;
 }
+.footer{
+    display: none;
+}
 @media only screen and (max-width:479px){
     .launchpage{
         height:auto;
         background-image: none;
-        background-color: black;
+        background-color: #051650;
         font-size: 1rem;
         color: white;
+    }
+    .launchpage-cmpyname img{
+        width: 40px;
+        height: 40px;
+    }
+    .launchpage-cmpyname h1{
+        font-size: 2.5rem;
     }
     .launchpage-content{
         margin:0 10%;
@@ -173,6 +183,7 @@ img{
     .launchpage-cmpyname{
         width: 100%;
         justify-content: center;
+        align-items: center;
     }
     .launchpage-cmpyname h1{
         padding:0 20px;
@@ -184,13 +195,16 @@ img{
     .launchpage-titlebar{
         height: 80px;
     }
+    .footer{
+        display: block;
+    }
 }
 @media only screen and (min-width:480px) and (max-width:768px)
 {
     .launchpage{
         height:auto;
         background-image: none;
-        background-color: black;
+        background-color: #0A2472;
         font-size: 1rem;
         color: white;
     }
@@ -228,6 +242,9 @@ img{
     .launchpage-titlebar{
         justify-content: space-evenly;
         height: 80px;
+    }
+    .footer{
+        display: block;
     }
 }
 @media only screen and (min-width:769px)

@@ -112,6 +112,7 @@
 @media only screen and (min-width: 500px) and (max-width: 670px) {
     .transaction-container {
         padding: 0;
+        min-height: 80vh;
     }
     .transaction-container table th {
         height: auto;
@@ -132,6 +133,7 @@
     }
     .transaction-container {
         padding: 0;
+        min-height: 80vh;
     }
     .transaction-container h1{
         font-size: 1.2rem;

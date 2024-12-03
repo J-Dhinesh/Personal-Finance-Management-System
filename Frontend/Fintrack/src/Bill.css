@@ -56,7 +56,9 @@
     align-items: center;
     z-index: 1000;
   }
-  
+  .bill-container tr p{
+    height: fit-content;
+  }
 .bill-container .overlay-content {
     background: white;
     padding: 20px;
@@ -85,10 +87,14 @@
 {
     .bill-container{
         padding: 0;
+        min-height: 80vh;
     }
 }
 @media only screen and (max-width:460px)
 {
+    .bill-container{
+        min-height: 80vh;
+    }
     .bill-container table th , .bill-container table td
     {
         padding:8px 0;

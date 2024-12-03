@@ -2,6 +2,7 @@ import React ,{useState} from "react";
 import Header from "./Header";
 import Workspace from "./Workspace";
 import Contents from "./Contents";
+import Footer from "./Footer";
 import "./Home.css";
 const Home=()=>{
     const [buttonColor, setButtonColor] = useState('');
@@ -28,6 +29,9 @@ const Home=()=>{
             onNotificationAdded={changeButtonColor}
             onClearNotifications={resetButtonColor}
             />
+        </div>
+        <div className="footer">
+          <Footer/>
         </div>
         </div>
     </React.Fragment>);

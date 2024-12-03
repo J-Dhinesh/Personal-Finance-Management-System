@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "./Signin.css";
 import { UserContext } from './UserContext';
+import logo from './image/earning.png'
+import Footer from './Footer';
 import ViewEye from './image/view.png'
 import HideEye from './image/hide.png'
 const Signin = () => {
@@ -40,7 +42,10 @@ const Signin = () => {
             setRes(data);
             if (response.status === 200) {
                 setUsername(usernameValue);
-                navigate('/home/dashboard');
+                setTimeout(()=>{
+                    navigate('/home/dashboard');
+                },500);
+                
             }
         } catch (error) {
             console.error('Error during sign-in:', error);
@@ -55,6 +60,10 @@ const Signin = () => {
     return (
         <React.Fragment>
             <div className="login-container">
+                <div className="launchpage-cmpyname">
+                    <img src={logo} alt="" />
+                    <h1>WealthWise</h1>
+                </div>
                 <div className="login-interior">
                     <div className="signin-content">
                         <h1>Sign In</h1>
@@ -80,6 +89,9 @@ const Signin = () => {
                         <p>Enter your personal details and start your journey with us</p>
                         <Link to="/signup"><button>SIGN UP</button></Link>
                     </div>
+                </div>
+                <div className="footer">
+                    <Footer/>
                 </div>
             </div>
         </React.Fragment>

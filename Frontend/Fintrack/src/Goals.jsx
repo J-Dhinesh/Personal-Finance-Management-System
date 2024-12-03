@@ -82,8 +82,10 @@ const Goals = () => {
       {isFormVisible && (
         <div className="overlay">
           <div className="overlay-content">
+          <div className='top'>
             <h1>Add New Goals</h1>
             <button onClick={toggleOverlay}>X</button>
+            </div>
             <form onSubmit={handleSubmit}>
               <label htmlFor="goalName">Goal Name:</label>
               <input

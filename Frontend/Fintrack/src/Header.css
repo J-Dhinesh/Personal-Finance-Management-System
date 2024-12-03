@@ -18,6 +18,9 @@
     padding:10% 0%;
     padding-left: 5%;
 }
+.companyname .white-logo{
+    display: none;
+}
 .companyname h1{
     font-family: "Baumans", system-ui;
     font-weight: 400;
@@ -76,7 +79,7 @@
     padding-left:10px;
 
 }
-.overlay {
+.header-container .overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -88,7 +91,6 @@
     align-items: center;
     z-index: 1000;
   }
-  
 .has-notification {
     position: relative;
     background-color: red;
@@ -98,6 +100,10 @@
  } 
  .header-container .signout-btn{
     display: none;
+ }
+ .control-btns{
+    display: flex;
+    justify-content: space-between;
  }
 @media only screen and (max-width:1200px)
 {
@@ -114,6 +120,7 @@
 }
 @media only screen and (max-width:768px)
 {
+    
     .menuimg{
         display: inline;
     }
@@ -128,12 +135,14 @@
     }
     .header-container{
         display: flex;
+        height: 120px;
         justify-content: space-evenly;
         align-items: center;
         height: auto;
         position: fixed;
         z-index: 100;
-        background-color: white;
+        color:white;
+        background-color: #0A2472;
     }
     .header-container img{
         height: 30px;
@@ -161,6 +170,7 @@
     .menu-overlay ul li img{
         padding-left: 20px;
     }
+
     .menu-overlay ul li h4{
         padding-left: 20px;
     }
@@ -168,14 +178,21 @@
         background-color: #3F00FF;
         color: white;
     }
+    .companyname .blue-logo{
+        display: none;
+    }
+    .companyname .white-logo{
+        display: block;
+    }
 }
 @media only screen and (max-width:479px)
 {
     .header-container{
         width: 100vw;
-        height: auto; 
+        height: 80px; 
     }
     .companyname h1{
+        font-size: 1.5rem;
         padding-right: 20px;
     }
     .tools-for-small-size button:first-of-type{

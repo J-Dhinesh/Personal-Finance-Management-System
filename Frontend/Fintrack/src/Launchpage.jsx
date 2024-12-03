@@ -5,6 +5,7 @@ import arrow from './image/right arrow.png';
 import cashback from './image/group.png';
 import secure from './image/speaker.png';
 import deposit from './image/money.png';
+import Footer from './Footer'
 import './Launchpage.css';
 const Launchpage=()=>{
   return(<React.Fragment>
@@ -12,7 +13,7 @@ const Launchpage=()=>{
         <div className="launchpage-titlebar">
           <div className="launchpage-cmpyname">
             <img src={logo} alt="" />
-            <h1>Fintrack</h1>
+            <h1>WealthWise</h1>
           </div>
           <div className="launchpage-options">
             <Link to='/signin'><button>Log in</button></Link>
@@ -22,7 +23,7 @@ const Launchpage=()=>{
         <div className="launchpage-content-container">
           <div className="launchpage-content">
             <h1>Simplified Financial Tracking Application</h1>
-            <p>Welcome! You&apos;re on the right path.Get started with FinTrack and take control of your expenses today!</p>
+            <p>Welcome! You&apos;re on the right path.Get started with WealthWise and take control of your expenses today!</p>
             <Link to='/signup'>
             <button>
                 <div className="text">Sign Up for free</div>
@@ -45,6 +46,9 @@ const Launchpage=()=>{
             </div>
             </div>
         </div>
+      </div>
+      <div className="footer">
+        <Footer/>
       </div>
   </React.Fragment>);
 }
